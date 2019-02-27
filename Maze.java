@@ -34,20 +34,17 @@ public class Maze {
       int index = 0;
       int charIndex = 0;
       while (index < count && charIndex < lines.length()) {
-      //  System.out.println(index+","+charIndex+","+lines.charAt(charIndex));
         maze[index][charIndex % length] = lines.charAt(charIndex);
         charIndex++;
-      //  System.out.println(lines.charAt(charIndex));
         if (lines.charAt(charIndex) == '\n') {
-        //  System.out.println("Stuff: "+Arrays.toString(maze[index]));
           index++;
           charIndex++;
         }
       }
       // Printing out 2D array of maze
-      for (char[] c : maze) {
-        System.out.println(Arrays.toString(c));
-      }
+      //for (char[] c : maze) {
+      //  System.out.println(Arrays.toString(c));
+      //}
     } catch (FileNotFoundException e) {
       System.out.println("File not found");
     }

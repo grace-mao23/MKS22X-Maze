@@ -18,6 +18,38 @@ public class Maze {
       throw a FileNotFoundException or IllegalStateException
   */
   public Maze(String filename) throws FileNotFoundException{
+    try {
+      File text = new File(filename);
+      Scanner in = new Scanner(text);
+      String lines = "";
+      int count = 1;
+      int length = 0;
+      while (in.hasNextLine()) {
+        String current = in.nextLine();
+        length = current.length();
+        lines += current + "\n";
+        count++;
+      }
+      char[][] maze = new char[count][length];
+      int index = 0;
+      int charIndex = 0;
+      while (index < count && charIndex > lines.length()) {
+    //    System.out.println(index+","+charIndex+","+lines.charAt(charIndex));
+        maze[index][charIndex % length] = lines.charAt(charIndex);
+        charIndex++;
+        if (lines.charAt(charIndex) == '\n') {
+          System.out.println(Arrays.toString(maze[index]));
+          index++;
+          charIndex++;
+        }
+      }
+      // Printing out 2D array of maze
+      for (char[] c : maze) {
+        System.out.println(Arrays.toString(c));
+      }
+    } catch (FileNotFoundException e) {
+      System.out.println("File not found");
+    }
       //COMPLETE CONSTRUCTOR
   }
 
@@ -83,27 +115,9 @@ public class Maze {
 
   public static void main(String[] args) {
     try {
-      File text = new File("Maze1.txt");
-      Scanner in = new Scanner(text);
-    /* Printing out line by line
-      while (in.hasNextLine()) {
-        String line = in.nextLine();
-        System.out.println(line);
-      } */
-      char[][] maze = new char[9][];
-      for (int i = 0; i < maze.length; i++) {
-        String line = in.nextLine();
-        maze[i] = new char[line.length()];
-        for (int x = 0; x < maze[i].length; x++) {
-          maze[i][x] = line.charAt(x);
-        }
-      }
-      // Printing out 2D array of maze
-      for (char[] c : maze) {
-        System.out.println(Arrays.toString(c));
-      }
+      Maze m = new Maze("Maze1.txt");
     } catch (FileNotFoundException e) {
-      System.out.println("File not found");
+      System.out.println(e);
     }
   }
 }

@@ -117,7 +117,7 @@ public class Maze {
       }
     }
     maze[x][y] = '@';
-    return solve(x,y);
+    return solve(x,y,1);
   }
 
   /*
@@ -130,15 +130,26 @@ public class Maze {
       All visited spots that were not part of the solution are changed to '.'
       All visited spots that are part of the solution are changed to '@'
   */
-  private int solve(int row, int col){ //you can add more parameters since this is private
-        //automatic animation! You are welcome.
+  private int solve(int row, int col, int level){ // level is number of @ symbols
+    //automatic animation! You are welcome.
     if(animate){
       clearTerminal();
       System.out.println(this);
       wait(20);
     }
+    // end of automatic code
+    if (maze[row][col] == 'E') {
+      return level;
+    }
+    int[] xMoves = new int[] { 0, 1, 0, -1 };
+    int[] yMoves = new int[] { -1, 0, 1, 0 };
+    for (int i = 0; i < 4; i++) {
+      if (maze[row][col] == ' ') {
+        maze[row][col] = ' ';
+        return solve(row+xMoves[i],col+yMoves[i],level+1);
+      }
 
-        //COMPLETE SOLVE
+    }
 
     return -1; //so it compiles
   }

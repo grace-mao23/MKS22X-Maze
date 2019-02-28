@@ -150,13 +150,15 @@ public class Maze {
       if (maze[row][col] == ' ' || level == 1) {
         maze[row][col] = '@';
         result += solve(row+xMoves[i],col+yMoves[i],level+1);
-        if (result == 0) {
-          maze[row][col] = '.';
-          return 0;
-        }
       } else {
+        System.out.println("hah");
         return 0;
       }
+    }
+    if (result == 0) {
+      maze[row][col] = '.';
+      System.out.println("mah");
+      return 0;
     }
     return -1;
   }

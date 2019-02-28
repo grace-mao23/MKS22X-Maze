@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Maze {
   private char[][]maze;
-  private boolean animate;//false by default
+  private boolean animate = false;//false by default
 
   /*Constructor loads a maze text file, and sets animate to false by default.
     1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -26,11 +26,12 @@ public class Maze {
       int length = 0;
       while (in.hasNextLine()) {
         String current = in.nextLine();
-        length = current.length();
+        length = current.length()+1;
         lines += current + "\n";
         count++;
       }
-      char[][] maze = new char[count][length];
+    //  System.out.println(count+","+length);
+      maze = new char[count][length];
       int index = 0;
       int charIndex = 0;
       while (index < count && charIndex < lines.length()) {
@@ -41,14 +42,28 @@ public class Maze {
           charIndex++;
         }
       }
+      int e = 0;
+      int s = 0;
+      for (int i = 0; i < maze.length; i++) {
+        for (int x = 0; x < maze[i].length; x++) {
+          if (maze[i][x] == 'E') {
+            e++;
+          }
+          if (maze[i][x] == 'S') {
+            s++;
+          }
+        }
+      }
+      if (e != 1 || s != 1) {
+        throw new IllegalStateException("Not the right number of starts or ends");
+      }
       // Printing out 2D array of maze
-      //for (char[] c : maze) {
+    //  for (char[] c : maze) {
       //  System.out.println(Arrays.toString(c));
       //}
     } catch (FileNotFoundException e) {
       System.out.println("File not found");
     }
-      //COMPLETE CONSTRUCTOR
   }
 
 
@@ -68,6 +83,21 @@ public class Maze {
   public void clearTerminal(){
     //erase terminal, go to top left of screen.
     System.out.println("\033[2J\033[1;1H");
+  }
+
+  /*Return the string that represents the maze.
+     It should look like the text file with some characters replaced.
+  */
+  public String toString(){
+    String result = "";
+  //  System.out.println(maze.length);
+    for (int i = 0; i < maze.length; i++) {
+      for (int x = 0; x < maze[i].length; x++) {
+        result += maze[i][x];
+      }
+      result += "\n";
+    }
+    return result;
   }
 
   /*Wrapper Solve Function returns the helper function
@@ -114,6 +144,7 @@ public class Maze {
   public static void main(String[] args) {
     try {
       Maze m = new Maze("Maze1.txt");
+      System.out.println(m.toString());
     } catch (FileNotFoundException e) {
       System.out.println(e);
     }

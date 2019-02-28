@@ -112,11 +112,12 @@ public class Maze {
       for (int j = 0; j < maze[i].length; j++) {
         if (maze[i][j] == 'S') {
           x = i;
-          j = y;
+          y = j;
         }
       }
     }
     maze[x][y] = '@';
+  //  System.out.println(toString());
     return solve(x,y,1);
   }
 
@@ -143,21 +144,27 @@ public class Maze {
     }
     int[] xMoves = new int[] { 0, 1, 0, -1 };
     int[] yMoves = new int[] { -1, 0, 1, 0 };
+    int result = 0;
     for (int i = 0; i < 4; i++) {
-      if (maze[row][col] == ' ') {
-        maze[row][col] = ' ';
-        return solve(row+xMoves[i],col+yMoves[i],level+1);
+      System.out.println(i+": "+row+", "+col+"\n"+toString());
+      if (maze[row][col] == ' ' || level == 1) {
+        maze[row][col] = '@';
+        result += solve(row+xMoves[i],col+yMoves[i],level+1);
+        if (result == 0) {
+          maze[row][col] = '.';
+          return 0;
+        }
+      } else {
+        return 0;
       }
-
     }
-
-    return -1; //so it compiles
+    return -1;
   }
 
   public static void main(String[] args) {
     try {
       Maze m = new Maze("Maze1.txt");
-      System.out.println(m.toString());
+      System.out.println(m.solve());
     } catch (FileNotFoundException e) {
       System.out.println(e);
     }

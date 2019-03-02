@@ -19,6 +19,7 @@ public class Maze {
   */
   public Maze(String filename) throws FileNotFoundException{
     try {
+      setAnimate(true);
       File text = new File(filename);
       Scanner in = new Scanner(text);
       String lines = "";
@@ -140,6 +141,7 @@ public class Maze {
     }
     // end of automatic code
     if (maze[row][col] == 'E') { // finished maze
+    //  System.out.println(steps);
       return steps;
     }
     if (maze[row][col] != ' ') { // not a viable move
@@ -152,7 +154,7 @@ public class Maze {
       maze[row][col] = '@'; // set current place as part of solution
       int next = solve(row+xMoves[i],col+yMoves[i], steps+1); // next move, branching out
       if (next != -1) { // this is a solution !!!
-        return steps;
+        return next;
       }
       // all else has failed, this move yields no solution
       maze[row][col] = '.';
@@ -162,7 +164,8 @@ public class Maze {
 
   public static void main(String[] args) {
     try {
-      Maze m = new Maze("Maze1.txt");
+      Maze m = new Maze("data1.dat");
+      System.out.println(m.toString());
       System.out.println(m.solve());
     } catch (FileNotFoundException e) {
       System.out.println(e);

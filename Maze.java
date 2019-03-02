@@ -131,7 +131,7 @@ public class Maze {
       All visited spots that were not part of the solution are changed to '.'
       All visited spots that are part of the solution are changed to '@'
   */
-  private int solve(int row, int col, int level){ // level is number of @ symbols
+  private int solve(int row, int col){ // level is number of @ symbols
     //automatic animation! You are welcome.
     if(animate){
       clearTerminal();
@@ -139,27 +139,12 @@ public class Maze {
       wait(20);
     }
     // end of automatic code
+    int output = 0; // to count number of steps 
     if (maze[row][col] == 'E') {
-      return level;
+      return output;
     }
     int[] xMoves = new int[] { 0, 1, 0, -1 };
     int[] yMoves = new int[] { -1, 0, 1, 0 };
-    int result = 0;
-    for (int i = 0; i < 4; i++) {
-      System.out.println(i+": "+row+", "+col+"\n"+toString());
-      if (maze[row][col] == ' ' || level == 1) {
-        maze[row][col] = '@';
-        result += solve(row+xMoves[i],col+yMoves[i],level+1);
-      } else {
-        System.out.println("hah");
-        return 0;
-      }
-    }
-    if (result == 0) {
-      maze[row][col] = '.';
-      System.out.println("mah");
-      return 0;
-    }
     return -1;
   }
 

@@ -154,7 +154,7 @@ public class Maze {
       maze[row][col] = '@'; // set current place as part of solution
       int next = solve(row+xMoves[i],col+yMoves[i], steps+1); // next move, branching out
       if (next != -1) { // this is a solution !!!
-        return next;
+        return next; // returns steps yielded from the successful run
       }
       // all else has failed, this move yields no solution
       maze[row][col] = '.';
@@ -164,7 +164,7 @@ public class Maze {
 
   public static void main(String[] args) {
     try {
-      Maze m = new Maze("data1.dat");
+      Maze m = new Maze(args[0]);
       System.out.println(m.toString());
       System.out.println(m.solve());
     } catch (FileNotFoundException e) {

@@ -116,9 +116,9 @@ public class Maze {
         }
       }
     }
-    maze[x][y] = '@';
+    maze[x][y] = ' ';
   //  System.out.println(toString());
-    return solve(x,y,1);
+    return solve(x,y,0);
   }
 
   /*
@@ -131,7 +131,7 @@ public class Maze {
       All visited spots that were not part of the solution are changed to '.'
       All visited spots that are part of the solution are changed to '@'
   */
-  private int solve(int row, int col){ // level is number of @ symbols
+  private int solve(int row, int col, int steps){ // steps is number of @ symbols
     //automatic animation! You are welcome.
     if(animate){
       clearTerminal();
@@ -139,12 +139,24 @@ public class Maze {
       wait(20);
     }
     // end of automatic code
-    int output = 0; // to count number of steps 
-    if (maze[row][col] == 'E') {
-      return output;
+    if (maze[row][col] == 'E') { // finished maze
+      return steps;
     }
+    if (maze[row][col] != ' ') { // not a viable move
+      return -1; // failed
+    }
+    // possible moves up, right, down, left
     int[] xMoves = new int[] { 0, 1, 0, -1 };
     int[] yMoves = new int[] { -1, 0, 1, 0 };
+    for (int i = 0; i < 4; i++) {
+      maze[row][col] = '@'; // set current place as part of solution
+      int next = solve(row+xMoves[i],col+yMoves[i], steps+1); // next move, branching out
+      if (next != -1) { // this is a solution !!!
+        return steps;
+      }
+      // all else has failed, this move yields no solution
+      maze[row][col] = '.';
+    }
     return -1;
   }
 

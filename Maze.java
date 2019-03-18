@@ -19,7 +19,7 @@ public class Maze {
   */
   public Maze(String filename) throws FileNotFoundException{
     try {
-      setAnimate(true);
+    //  setAnimate(true);
       File text = new File(filename);
       Scanner in = new Scanner(text);
       String lines = "";
@@ -165,7 +165,7 @@ public class Maze {
   public static void main(String[] args) {
     try {
       Maze m = new Maze(args[0]);
-      System.out.println(m.toString());
+  //    System.out.println(m.toString());
       System.out.println(m.solve());
     } catch (FileNotFoundException e) {
       System.out.println(e);
